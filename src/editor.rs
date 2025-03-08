@@ -1,44 +1,41 @@
 use crossterm::event::{Event, Event::Key, KeyCode::Char, KeyEvent, KeyModifiers, read};
-use crossterm::execute;
-use crossterm::terminal::{Clear, ClearType, disable_raw_mode, enable_raw_mode};
-use std::io::stdout;
+use std::io::Error;
+mod terminal;
+use terminal::{Position, Size, Terminal};
 
 pub struct Editor {
     should_quit: bool,
 }
 
 impl Editor {
-    pub fn default() -> Self {
-        Editor { should_quit: false }
+    pub const fn default() -> Self {
+        // Creates a new `Editor` instance with `should_quit` = false
+        Self { should_quit: false }
     }
+    // entry point of the editor
     pub fn run(&mut self) {
-        Self::initialize().unwrap();
+        Terminal::initialize().unwrap(); // initialize terminal
         let result = self.repl();
-        Self::terminate().unwrap();
-        result.unwrap();
+        Terminal::terminate().unwrap(); // restore term to normal state
+        result.unwrap(); // panics if an error occurs
     }
-    fn initialize() -> Result<(), std::io::Error> {
-        enable_raw_mode()?;
-        Self::clear_screen()
-    }
-    fn terminate() -> Result<(), std::io::Error> {
-        disable_raw_mode()
-    }
-    fn clear_screen() -> Result<(), std::io::Error> {
-        let mut stdout = stdout();
-        execute!(stdout, Clear(ClearType::All))
-    }
-    fn repl(&mut self) -> Result<(), std::io::Error> {
+
+    // main loop of editor
+    // needs to be mutable because it calls `evaluate_event(&mut self, event: &Event)`
+    fn repl(&mut self) -> Result<(), Error> {
         loop {
-            let event = read()?;
-            self.evaluate_event(&event);
             self.refresh_screen()?;
             if self.should_quit {
+                // loop until true
                 break;
             }
+            let event = read()?;
+            self.evaluate_event(&event);
         }
         Ok(())
     }
+    // handles keyboard events
+    // &mut self = mutable reference = can change the `should_quit` boolean
     fn evaluate_event(&mut self, event: &Event) {
         if let Key(KeyEvent {
             code, modifiers, ..
@@ -52,10 +49,27 @@ impl Editor {
             }
         }
     }
-    fn refresh_screen(&self) -> Result<(), std::io::Error> {
+    fn refresh_screen(&self) -> Result<(), Error> {
+        Terminal::hide_cursor()?;
         if self.should_quit {
-            Self::clear_screen()?;
-            print!("Goodbye.\r\n");
+            Terminal::clear_screen()?;
+            Terminal::print("Goodbye.\r\n");
+        } else {
+            Self::draw_rows()?;
+            Terminal::move_cursor_to(Position { x: 0, y: 0 })?;
+        }
+        Terminal::show_cursor()?;
+        Terminal::execute()?;
+        Ok(())
+    }
+    fn draw_rows() -> Result<(), Error> {
+        let Size { height, .. } = Terminal::size()?;
+        for current_row in 0..height {
+            Terminal::clear_line()?;
+            Terminal::print("~")?;
+            if current_row + 1 < height {
+                Terminal::print("\r\n");
+            }
         }
         Ok(())
     }

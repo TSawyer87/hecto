@@ -13,6 +13,20 @@ warning|:|src/editor.rs|:|59|:|59|:|13|:|44|:|unused `std::result::Result` that 
 
 |:|none
 help|:|src/editor.rs|:|59|:|59|:|13|:|13|:|use `let _ = ...` to ignore the resulting value|:|none|:|let _ = 
+warning|:|src/editor.rs|:|93|:|93|:|17|:|40|:|unused `std::result::Result` that must be used|:|[0m[1m[33mwarning[0m[0m[1m: unused `std::result::Result` that must be used[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/editor.rs:93:17[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m93[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                Terminal::print("\r\n");[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this `Result` may be an `Err` variant, which should be handled[0m
+[0m[1m[38;5;14mhelp[0m[0m: use `let _ = ...` to ignore the resulting value[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m93[0m[0m [0m[0m[1m[38;5;12m| [0m[0m                [0m[0m[38;5;10mlet _ = [0m[0mTerminal::print("\r\n");[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[38;5;10m+++++++[0m
+
+|:|none
+help|:|src/editor.rs|:|93|:|93|:|17|:|17|:|use `let _ = ...` to ignore the resulting value|:|none|:|let _ = 
 warning|:|src/editor.rs|:|59|:|59|:|13|:|44|:|unused `std::result::Result` that must be used|:|[0m[1m[33mwarning[0m[0m[1m: unused `std::result::Result` that must be used[0m
 [0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/editor.rs:59:13[0m
 [0m   [0m[0m[1m[38;5;12m|[0m
@@ -28,20 +42,6 @@ warning|:|src/editor.rs|:|59|:|59|:|13|:|44|:|unused `std::result::Result` that 
 
 |:|none
 help|:|src/editor.rs|:|59|:|59|:|13|:|13|:|use `let _ = ...` to ignore the resulting value|:|none|:|let _ = 
-warning|:|src/editor.rs|:|93|:|93|:|17|:|40|:|unused `std::result::Result` that must be used|:|[0m[1m[33mwarning[0m[0m[1m: unused `std::result::Result` that must be used[0m
-[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/editor.rs:93:17[0m
-[0m   [0m[0m[1m[38;5;12m|[0m
-[0m[1m[38;5;12m93[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                Terminal::print("\r\n");[0m
-[0m   [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^^^^^^^^^^^^^^^^^^^[0m
-[0m   [0m[0m[1m[38;5;12m|[0m
-[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this `Result` may be an `Err` variant, which should be handled[0m
-[0m[1m[38;5;14mhelp[0m[0m: use `let _ = ...` to ignore the resulting value[0m
-[0m   [0m[0m[1m[38;5;12m|[0m
-[0m[1m[38;5;12m93[0m[0m [0m[0m[1m[38;5;12m| [0m[0m                [0m[0m[38;5;10mlet _ = [0m[0mTerminal::print("\r\n");[0m
-[0m   [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[38;5;10m+++++++[0m
-
-|:|none
-help|:|src/editor.rs|:|93|:|93|:|17|:|17|:|use `let _ = ...` to ignore the resulting value|:|none|:|let _ = 
 warning|:|src/editor.rs|:|93|:|93|:|17|:|40|:|unused `std::result::Result` that must be used|:|[0m[1m[33mwarning[0m[0m[1m: unused `std::result::Result` that must be used[0m
 [0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/editor.rs:93:17[0m
 [0m   [0m[0m[1m[38;5;12m|[0m
